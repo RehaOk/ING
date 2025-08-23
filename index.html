@@ -6,6 +6,17 @@
     <title>Employee Listing App</title> <!-- TODO: Update with localized text -->
   </head>
   <body>
-    <div id="root"></div>
+    <div id="outlet"></div>
+    <script>
+      window.process = {
+        // Causes Error on Localhost if not defined it is an environmental issue
+        // this fixes and makes the project work on Localhost
+        // therefore wont spend time fixing properly.
+        env: {
+          NODE_ENV: 'development'
+        }
+      };
+    </script>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>
