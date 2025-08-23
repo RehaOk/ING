@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
-import en from '../localization/en.json';
-import tr from '../localization/tr.json';
+import en from '../localization/en.json' with { type: 'json' };
+import tr from '../localization/tr.json' with { type: 'json' };
 
 const languages = {en, tr};
 
