@@ -6,17 +6,20 @@ import {confirmationModalStyles} from './confirmationModal.styles.js';
 export class ConfirmationModal extends LitElement {
   static styles = confirmationModalStyles;
   static properties = {
-    employee: {type: String},
+    employeeName: {type: String},
     isActive: {type: Boolean, reflect: true},
+    onConfirm: {type: Function},
   };
 
   constructor() {
     super();
     this.employee = '';
+    this.isActive = false;
   }
 
-  onConfirm = () => this.dispatchEvent(new CustomEvent('confirm')); // TODO: work on event structures
-  onCancel = () => this.dispatchEvent(new CustomEvent('cancel'));
+  handleOnCancel() {
+    this.isActive = false;
+  }
 
   render() {
     return this.isActive
@@ -32,16 +35,15 @@ export class ConfirmationModal extends LitElement {
               <button
                 type="button"
                 class="modal__close-button"
-                @click=${this.onCancel}
+                @click=${this.handleOnCancel}
                 aria-label="Close"
               >
                 <img src="./src/icons/xIcon.svg" alt="Close Icon" />
-                />
               </button>
             </div>
             <p>
               <slot name="message"
-                >Selected Employee record of ${this.employee} will be
+                >Selected Employee record of ${this.employeeName} will be
                 deleted</slot
               >
             </p>
@@ -55,7 +57,7 @@ export class ConfirmationModal extends LitElement {
             <button
               type="button"
               class="modal__button modal__button--cancel"
-              @click=${this.onCancel}
+              @click=${this.handleOnCancel}
             >
               Cancel
             </button>
