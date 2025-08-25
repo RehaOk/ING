@@ -1,0 +1,140 @@
+/* 
+    There is a problem with plugin if you are using it at line 63
+    see https://github.com/runem/lit-analyzer/issues/97
+    didn't try to fix it to save time
+*/
+
+import {LitElement, html} from 'lit';
+import {customInputStyles} from './customInput.styles';
+import {classMap} from 'lit/directives/class-map.js';
+
+class CustomInput extends LitElement {
+  static styles = customInputStyles;
+  static properties = {
+    id: {type: String},
+    name: {type: String},
+    type: {type: String},
+    label: {type: String},
+    required: {type: Boolean},
+    value: {type: String},
+    errorMessage: {type: String},
+    options: {type: Array},
+    selectedValue: {type: String},
+    errorHandler: {type: Object},
+  };
+
+  constructor() {
+    super();
+    this.type = 'text';
+    this.label = '';
+    this.required = false;
+    this.value = '';
+    this.errorMessage = '';
+    this.id = '';
+    this.touched = false;
+    this.errorHandler = {};
+    this.name = '';
+  }
+
+  updated() {
+    if (this.touched) {
+      const customInput = this.shadowRoot.querySelector('input, select');
+      if (customInput) {
+        customInput.classList.add('touched');
+      }
+    }
+  }
+
+  render() {
+    return html`
+      <div class="custom-input">
+        <label for="input-field" class="custom-input__label"
+          >${this.label}
+          ${this.type !== 'select'
+            ? html`<div
+                class=${classMap({
+                  ['custom-input__input-wrapper']: true,
+                  ['custom-input__input-wrapper--date']: this.type === 'date',
+                })}
+              >
+                <input
+                  id=${this.id}
+                  name=${this.name}
+                  type="${this.type}"
+                  .value="${this.value}"
+                  @input="${this.handleInput}"
+                  @blur="${this.validate}"
+                  ?required="${this.required}"
+                  .aria-describedby="${this.errorMessage
+                    ? 'error-' + this.id
+                    : ''}"
+                />
+              </div>`
+            : html`<div class="custom-input__input-wrapper">
+                <select
+                  id=${this.id}
+                  name=${this.name}
+                  .value="${this.value}"
+                  @click="${this.handleInput}"
+                  @change="${this.handleInput}"
+                >
+                  <option value="" disabled selected hidden>
+                    Please Select
+                  </option>
+                  ${this.options.map(
+                    (option) => html`
+                      <option
+                        .value="${option.value}"
+                        .selected="${this.selectedValue === option.value}"
+                      >
+                        ${option.label}
+                      </option>
+                    `
+                  )}
+                </select>
+              </div>`}
+          ${this.errorMessage
+            ? html`<div class="custom-input__error-message">
+                ${this.errorMessage}
+              </div>`
+            : ''}
+        </label>
+      </div>
+    `;
+  }
+
+  handleInput(event) {
+    if (!this.touched) {
+      this.touched = true;
+    }
+    if (this.type === 'select' && event.target.value === '') {
+      this.selectedValue = this.options[0].value;
+    } else {
+      this.value = event.target.value;
+    }
+  }
+
+  validate() {
+    if (this.required && !this.value) {
+      this.errorMessage = 'This field is required';
+    } else if (
+      this.errorHandler.handle &&
+      this.errorHandler.handle(this.value)
+    ) {
+      this.errorMessage = this.errorHandler.message;
+    } else {
+      this.errorMessage = '';
+    }
+
+    if (!this.touched) {
+      this.touched = true;
+    }
+  }
+
+  isValid() {
+    this.validate();
+    return !this.errorMessage;
+  }
+}
+
+customElements.define('custom-input', CustomInput);
