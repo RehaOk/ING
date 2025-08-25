@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Tahoma, Verdana, sans-serif;
+}
+:root {
+  --primary-color: #ff6200;
+  --secondary-color: #1d1c61;
+  background-color: #f5f5f5;
+}
+
+input[type='date']::-webkit-input-placeholder {
+  color: transparent;
+}
+
+input[type='date']::-moz-placeholder {
+  color: transparent;
+}
+
+input[type='date']:-ms-input-placeholder {
+  color: transparent;
+}
