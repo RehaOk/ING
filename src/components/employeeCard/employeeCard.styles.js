@@ -1,0 +1,94 @@
+/* 
+    https://lit.dev/docs/components/styles/#external-stylesheet as per instructions here
+
+    I didn't create separate css files but followed:
+    https://lit.dev/docs/components/styles/#sharing-styles
+
+    This approach to create a style file, although it is not necessary 
+    and styles can be created in their respective files, 
+    I believe this approach gives better structure to the project and 
+    makes line of code smaller and makes files more readable.
+*/
+
+import {css} from 'lit';
+
+export const employeeCardStyles = css`
+  .card {
+    width: 36vw;
+    min-width: 12.5rem;
+    box-shadow: 1px 1px 2px 1px rgba(90, 90, 90, 0.1);
+    padding: 0.25rem 0.6rem 1.25rem 0.6rem;
+    background-color: white;
+
+    @media (max-width: 768px) {
+      width: 80vw;
+      min-width: 12.5rem;
+    }
+  }
+
+  .card__info-row {
+    display: grid;
+    grid-template-areas: 'left right';
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1.3rem;
+  }
+
+  .card__info--left {
+    grid-area: left;
+  }
+
+  .card__info--right {
+    grid-area: right;
+  }
+
+  .card__info-title {
+    color: #b0b0b4;
+  }
+
+  .card__footer {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .card__button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    max-width: 6rem;
+    height: 2rem;
+    border-radius: 0.4rem;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.75rem;
+  }
+
+  .button__icon > svg {
+    position: relative;
+    overflow: unset;
+    margin-right: 0.8rem;
+  }
+
+  .button__icon--edit > svg {
+    width: 0.4rem;
+    height: 0.4rem;
+    bottom: 0.3125rem;
+  }
+
+  .button__icon--trash > svg {
+    bottom: 0.4rem;
+  }
+
+  .card__button--secondary {
+    color: white;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+  }
+
+  .card__button--primary {
+    color: white;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+  }
+`;
