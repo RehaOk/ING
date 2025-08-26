@@ -10,7 +10,7 @@
     makes line of code smaller and makes files more readable.
 */
 
-// TODO: Reconside Units
+// TODO: Reconsider Units
 
 import {css} from 'lit';
 
@@ -64,5 +64,18 @@ export const headerStyles = css`
 
   .action-link.active {
     font-weight: bold;
+  }
+
+  .action-button {
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .header__flag-icon {
+    margin-top: 0.2rem;
+    width: 1rem;
+    height: 1rem;
   }
 `;

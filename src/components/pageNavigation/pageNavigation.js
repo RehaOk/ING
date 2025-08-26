@@ -1,9 +1,40 @@
 import {LitElement, html} from 'lit';
 import {headerStyles} from './pageNavigation.styles';
+import {store} from '../../store';
+import {setLocale} from '../../slices/localizationSlice';
 
-//TODO: Add Localization, Add Flag Functionality with Icon Change
+//TODO: Add Localization
 export class PageNavigation extends LitElement {
+  unSubscribe;
   static styles = headerStyles;
+  static properties = {
+    locale: {type: String},
+  };
+
+  connectedCallback() {
+    super.connectedCallback();
+    const {localization} = store.getState();
+    this.locale = localization.locale;
+    this.unSubscribe = store.subscribe(() => {
+      const {localization} = store.getState();
+      this.locale = localization.locale;
+      this.requestUpdate();
+    });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    if (this.unSubscribe) {
+      this.unSubscribe();
+    }
+  }
+
+  toggleLocale() {
+    const {dispatch} = store;
+    this.locale === 'en'
+      ? dispatch(setLocale('tr'))
+      : dispatch(setLocale('en'));
+  }
 
   render() {
     return html`
@@ -27,7 +58,19 @@ export class PageNavigation extends LitElement {
               alt="Plus Icon"
             />Add New</a
           >
-          <button class="action-button">Flag</button>
+          <button class="action-button" @click="${this.toggleLocale}">
+            ${this.locale === 'en'
+              ? html`<img
+                  class="header__flag-icon"
+                  src="./src/icons/ukFlagIcon.svg"
+                  alt="United Kingdom Flag Icon"
+                />`
+              : html`<img
+                  class="header__flag-icon"
+                  src="./src/icons/trFlagIcon.svg"
+                  alt="Turkish Flag Icon"
+                />`}
+          </button>
         </div>
       </div>
     `;
