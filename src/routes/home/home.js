@@ -35,7 +35,8 @@ export class HomeView extends LitElement {
     const {dispatch, getState, subscribe} = store;
     const {employee, pagination} = getState();
     this.unSubscribe = subscribe(() => {
-      this.employeeList = getState().pagination.employeeListToDisplay;
+      const {pagination} = getState();
+      this.employeeList = pagination.employeeListToDisplay;
     });
 
     dispatch(setItemsPerPage(4));
