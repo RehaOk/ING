@@ -11,35 +11,35 @@ import {classMap} from 'lit/directives/class-map.js';
 // TODO: Consider if making fields private was the right choice
 // TODO: Make magic numbers constant
 export class PaginationComponent extends LitElement {
-  #unSubscribe;
-  #currentPageNumber;
-  #currentItemsPerPage;
-
   static styles = paginationStyles;
   static properties = {
     classes: {type: Object},
+    currentPageNumber: {type: Number},
+    currentItemsPerPage: {type: Number},
   };
 
   constructor() {
     super();
     const {dispatch, getState} = store;
     const {pagination, employee} = getState();
-    this.#currentPageNumber = pagination.currentPage;
-    this.#currentItemsPerPage = pagination.itemsPerPage;
-    // TODO: Add this logic to add remove items
+    this.currentPageNumber = pagination.currentPage;
+    this.currentItemsPerPage = pagination.itemsPerPage;
+    this.employeeCount = employee.employeeList.length;
     dispatch(setTotalPageNumber({employeeCount: employee.employeeList.length}));
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this.#unSubscribe = store.subscribe(() => {
-      const {currentPage, itemsPerPage} = store.getState().pagination;
-      if (currentPage !== this.#currentPageNumber) {
-        this.#currentPageNumber = currentPage;
+    this.unSubscribe = store.subscribe(() => {
+      const {pagination} = store.getState();
+      const {currentPage, itemsPerPage} = pagination;
+      this.currentPageNumber = currentPage;
+      if (currentPage !== this.currentPageNumber) {
+        this.currentPageNumber = currentPage;
         this.requestUpdate();
       }
-      if (itemsPerPage !== this.#currentItemsPerPage) {
-        this.#currentItemsPerPage = itemsPerPage;
+      if (itemsPerPage !== this.currentItemsPerPage) {
+        this.currentItemsPerPage = itemsPerPage;
         this.requestUpdate();
       }
     });
@@ -47,47 +47,47 @@ export class PaginationComponent extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    if (this.#unSubscribe) {
-      this.#unSubscribe();
+    if (this.unSubscribe) {
+      this.unSubscribe();
     }
   }
 
-  #goToPage(pageNumber = this.#currentPageNumber) {
+  goToPage(pageNumber = this.currentPageNumber) {
     const {dispatch, getState} = store;
     const {employeeList} = getState().employee;
-    const start = (pageNumber - 1) * this.#currentItemsPerPage;
-    const end = start + this.#currentItemsPerPage;
+    const start = (pageNumber - 1) * this.currentItemsPerPage;
+    const end = start + this.currentItemsPerPage;
     dispatch(setEmployeeListToDisplay(employeeList.slice(start, end)));
     dispatch(setCurrentPage(pageNumber));
     this.requestUpdate();
   }
 
-  #goToNextPage() {
+  goToNextPage() {
     const {totalPageNumber} = store.getState().pagination;
-    if (this.#currentPageNumber < totalPageNumber) {
-      this.#currentPageNumber += 1;
-      this.#goToPage();
+    if (this.currentPageNumber < totalPageNumber) {
+      this.currentPageNumber += 1;
+      this.goToPage();
     } else {
       // TODO: Disable Button
     }
   }
 
-  #goToPreviousPage() {
-    if (this.#currentPageNumber > 1) {
-      this.#currentPageNumber -= 1;
-      this.#goToPage();
+  goToPreviousPage() {
+    if (this.currentPageNumber > 1) {
+      this.currentPageNumber -= 1;
+      this.goToPage();
     } else {
       // TODO: Disable Button
     }
   }
 
-  #getNextPaginationNumbers() {
+  getPaginationNumbers() {
     // TODO: Maybe convert into util function
     const {totalPageNumber} = store.getState().pagination;
     const pageNumbers = [];
     for (
-      let i = this.#currentPageNumber - 5;
-      i <= this.#currentPageNumber + 5;
+      let i = this.currentPageNumber - 5;
+      i <= this.currentPageNumber + 5;
       i++
     ) {
       if (totalPageNumber < i) {
@@ -103,14 +103,14 @@ export class PaginationComponent extends LitElement {
 
     const isLastPageIncluded = pageNumbers.includes(totalPageNumber);
     return html`${pageNumbers.map((pageNumber) => {
-      const isButtonActive = pageNumber === this.#currentPageNumber;
+      const isButtonActive = pageNumber === this.currentPageNumber;
 
       return html`<button
         class=${classMap({
           pagination__button: true,
           ['pagination__button--active']: isButtonActive,
         })}
-        @click=${() => this.#goToPage(pageNumber)}
+        @click=${() => this.goToPage(pageNumber)}
       >
         ${pageNumber}
       </button>`;
@@ -120,7 +120,7 @@ export class PaginationComponent extends LitElement {
             class=${classMap({
               pagination__button: true,
             })}
-            @click=${() => this.#goToPage(totalPageNumber)}
+            @click=${() => this.goToPage(totalPageNumber)}
           >
             ${totalPageNumber}
           </button>`
@@ -129,15 +129,15 @@ export class PaginationComponent extends LitElement {
 
   render() {
     return html`<div class="pagination">
-      <button class="pagination__button" @click=${this.#goToPreviousPage}>
+      <button class="pagination__button" @click=${this.goToPreviousPage}>
         <img
           class="pagination__chevron"
           src="./src/icons/chevronLeftIcon.svg"
           alt="Pagination Left Chevron"
         />
       </button>
-      ${this.#getNextPaginationNumbers()}
-      <button class="pagination__button" @click=${this.#goToNextPage}>
+      ${this.getPaginationNumbers()}
+      <button class="pagination__button" @click=${this.goToNextPage}>
         <img
           class="pagination__chevron"
           src="./src/icons/chevronRightIcon.svg"
