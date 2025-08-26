@@ -12,6 +12,7 @@ import {
   setItemsPerPage,
   setPaginationForViewMode,
 } from '../../slices/paginationSlice';
+import {getEmployeeListToDisplay} from '../../utils';
 
 export class HomeView extends LitElement {
   static styles = homeViewStyles;
@@ -26,11 +27,17 @@ export class HomeView extends LitElement {
     const {dispatch, getState} = store;
     const {employee, pagination, localization} = getState();
     this.translations = localization.translations;
-
-    const start = (pagination.currentPage - 1) * pagination.itemsPerPage;
-    const end = start + pagination.itemsPerPage;
     this.employeeList = employee.employeeList;
-    dispatch(setEmployeeListToDisplay(employee.employeeList.slice(start, end)));
+
+    dispatch(
+      setEmployeeListToDisplay(
+        getEmployeeListToDisplay(
+          employee.employeeList,
+          pagination.currentPage,
+          pagination.itemsPerPage
+        )
+      )
+    );
   }
 
   connectedCallback() {
@@ -42,11 +49,16 @@ export class HomeView extends LitElement {
       this.translations = localization.translations;
       this.employeeList = pagination.employeeListToDisplay;
     });
-
     dispatch(setItemsPerPage(4));
-    const start = (pagination.currentPage - 1) * 4;
-    const end = start + 4;
-    dispatch(setEmployeeListToDisplay(employee.employeeList.slice(start, end)));
+    dispatch(
+      setEmployeeListToDisplay(
+        getEmployeeListToDisplay(
+          employee.employeeList,
+          pagination.currentPage,
+          4
+        )
+      )
+    );
   }
 
   disconnectedCallback() {

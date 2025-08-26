@@ -7,6 +7,7 @@ import {
   setTotalPageNumber,
 } from '../../slices/paginationSlice';
 import {classMap} from 'lit/directives/class-map.js';
+import {getEmployeeListToDisplay} from '../../utils';
 
 // TODO: Consider if making fields private was the right choice
 // TODO: Make magic numbers constant
@@ -53,9 +54,15 @@ export class PaginationComponent extends LitElement {
   goToPage(pageNumber = this.currentPageNumber) {
     const {dispatch, getState} = store;
     const {employeeList} = getState().employee;
-    const start = (pageNumber - 1) * this.currentItemsPerPage;
-    const end = start + this.currentItemsPerPage;
-    dispatch(setEmployeeListToDisplay(employeeList.slice(start, end)));
+    dispatch(
+      setEmployeeListToDisplay(
+        getEmployeeListToDisplay(
+          employeeList,
+          pageNumber,
+          this.currentItemsPerPage
+        )
+      )
+    );
     dispatch(setCurrentPage(pageNumber));
     this.requestUpdate();
   }

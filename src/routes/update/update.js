@@ -1,6 +1,7 @@
 import {LitElement, html} from 'lit';
 import {updateViewStyles} from './update.styles';
 import {store} from '../../store';
+import {Router} from '@vaadin/router';
 
 export class UpdateView extends LitElement {
   static styles = updateViewStyles;

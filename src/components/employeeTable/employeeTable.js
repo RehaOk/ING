@@ -9,6 +9,7 @@ import {
   setCurrentPage,
 } from '../../slices/paginationSlice';
 import {getTableTitles} from './employeeTable.utils';
+import {getEmployeeListToDisplay} from '../../utils';
 class EmployeeTable extends LitElement {
   static styles = employeeTableStyles;
   static properties = {
@@ -53,9 +54,15 @@ class EmployeeTable extends LitElement {
     dispatch(deleteEmployeeData(employeeId));
     this.isConfirmationModalActive = false;
     const {employee, pagination} = getState();
-    const start = (pagination.currentPage - 1) * pagination.itemsPerPage;
-    const end = start + pagination.itemsPerPage;
-    dispatch(setEmployeeListToDisplay(employee.employeeList.slice(start, end)));
+    dispatch(
+      setEmployeeListToDisplay(
+        getEmployeeListToDisplay(
+          employee.employeeList,
+          pagination.currentPage,
+          pagination.itemsPerPage
+        )
+      )
+    );
     dispatch(setTotalPageNumber({employeeCount: employee.employeeList.length}));
     if (pagination.currentPage > pagination.totalPageNumber) {
       dispatch(setCurrentPage(pagination.totalPageNumber));

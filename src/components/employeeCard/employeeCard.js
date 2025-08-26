@@ -8,7 +8,7 @@ import {
   setEmployeeListToDisplay,
   setCurrentPage,
 } from '../../slices/paginationSlice';
-
+import {getEmployeeListToDisplay} from '../../utils';
 export class EmployeeCard extends LitElement {
   static styles = employeeCardStyles;
 
@@ -67,9 +67,15 @@ export class EmployeeCard extends LitElement {
     dispatch(deleteEmployeeData(employeeId));
     this.isConfirmationModalActive = false;
     const {employee, pagination} = getState();
-    const start = (pagination.currentPage - 1) * pagination.itemsPerPage;
-    const end = start + pagination.itemsPerPage;
-    dispatch(setEmployeeListToDisplay(employee.employeeList.slice(start, end)));
+    dispatch(
+      setEmployeeListToDisplay(
+        getEmployeeListToDisplay(
+          employee.employeeList,
+          pagination.currentPage,
+          pagination.itemsPerPage
+        )
+      )
+    );
     dispatch(setTotalPageNumber({employeeCount: employee.employeeList.length}));
     if (pagination.currentPage > pagination.totalPageNumber) {
       dispatch(setCurrentPage(pagination.totalPageNumber));
