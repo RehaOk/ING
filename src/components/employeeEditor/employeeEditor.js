@@ -17,12 +17,7 @@ import {
   generateUniqueId,
   formatDate,
 } from './employeeEditor.utils';
-
-const positionList = JSON.stringify([
-  {value: 'Junior', label: 'Junior'},
-  {value: 'Medior', label: 'Medior'},
-  {value: 'Senior', label: 'Senior'},
-]);
+import {POSITION_LIST} from './employeeEditor.constants';
 
 export class EmployeeEditor extends LitElement {
   static styles = employeeEditorStyles;
@@ -39,16 +34,25 @@ export class EmployeeEditor extends LitElement {
     position: {type: String},
     employeeName: {type: String},
     isConfirmationModalActive: {type: Boolean},
+    translations: {type: Object},
   };
 
   constructor() {
     super();
     this.isFormValid = false;
     this.isConfirmationModalActive = false;
+    const {localization} = store.getState();
+    this.translations = localization.translations;
   }
 
   connectedCallback() {
     super.connectedCallback();
+    const {localization} = store.getState();
+    this.locale = localization.locale;
+    this.unSubscribe = store.subscribe(() => {
+      const {localization} = store.getState();
+      this.translations = localization.translations;
+    });
     if (typeof this.id === 'string' && this.id.length > 0) {
       const {employee} = store.getState();
       const {
@@ -77,6 +81,11 @@ export class EmployeeEditor extends LitElement {
         Router.go('/');
       }
     }
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.unSubscribe();
   }
 
   handleConfirmationModalCancel() {
@@ -138,7 +147,8 @@ export class EmployeeEditor extends LitElement {
       <div class="input__container">
         ${this.id
           ? html`<p class="input__edit-info">
-              You are editing ${this.firstName} ${this.lastName}
+              ${this.translations.employeeEditor.editInfo} ${this.firstName}
+              ${this.lastName}
             </p>`
           : null}
         <form @submit=${this.handleSubmit}>
@@ -148,7 +158,7 @@ export class EmployeeEditor extends LitElement {
                 id="first-name"
                 name="firstName"
                 type="text"
-                label="First Name"
+                label=${this.translations.labels.firstName}
                 value=${this.firstName || ''}
                 required
                 .errorHandler=${nameInputErrorHandler}
@@ -159,7 +169,7 @@ export class EmployeeEditor extends LitElement {
                 id="last-name"
                 name="lastName"
                 type="text"
-                label="Last Name"
+                label=${this.translations.labels.lastName}
                 value=${this.lastName || ''}
                 required
                 .errorHandler=${lastNameInputErrorHandler}
@@ -170,7 +180,7 @@ export class EmployeeEditor extends LitElement {
                 id="date-of-employment"
                 name="dateOfEmployment"
                 type="date"
-                label="Date of Employment"
+                label=${this.translations.labels.dateOfEmployment}
                 value=${this.dateOfEmployment || ''}
                 required
               ></custom-input>
@@ -182,7 +192,7 @@ export class EmployeeEditor extends LitElement {
                 id="date-of-birth"
                 name="dateOfBirth"
                 type="date"
-                label="Date of Birth"
+                label=${this.translations.labels.dateOfBirth}
                 value=${this.dateOfBirth || ''}
                 required
               ></custom-input>
@@ -192,7 +202,7 @@ export class EmployeeEditor extends LitElement {
                 id="email"
                 name="email"
                 type="email"
-                label="Email"
+                label=${this.translations.labels.email}
                 value=${this.email || ''}
                 .errorHandler=${emailInputErrorHandler}
                 required
@@ -203,7 +213,7 @@ export class EmployeeEditor extends LitElement {
                 id="phone"
                 name="phone"
                 type="tel"
-                label="Phone"
+                label=${this.translations.labels.phone}
                 value=${this.phone || ''}
                 required
                 .errorHandler=${phoneInputErrorHandler}
@@ -216,7 +226,7 @@ export class EmployeeEditor extends LitElement {
                 id="department"
                 name="department"
                 type="text"
-                label="Department"
+                label=${this.translations.labels.department}
                 value=${this.department || ''}
                 required
                 .errorHandler=${departmentInputErrorHandler}
@@ -227,8 +237,8 @@ export class EmployeeEditor extends LitElement {
                 id="position"
                 name="position"
                 type="select"
-                label="Position"
-                options=${positionList}
+                label=${this.translations.labels.position}
+                options=${POSITION_LIST}
                 selectedValue=${this.position || ''}
                 .errorHandler=${positionInputErrorHandler}
                 required
@@ -241,14 +251,14 @@ export class EmployeeEditor extends LitElement {
               @click=${this.displayConfirmationModal}
               class="input__button input__button--primary"
             >
-              Save
+              ${this.translations.employeeEditor.save}
             </button>
             <button
               type="button"
               class="input__button input__button--secondary"
               @click=${this.handleCancel}
             >
-              Cancel
+              ${this.translations.employeeEditor.cancel}
             </button>
           </div>
         </form>
@@ -259,7 +269,9 @@ export class EmployeeEditor extends LitElement {
         .onCancel=${this.handleConfirmationModalCancel.bind(this)}
       >
         <span slot="message">
-          Selected Employee record of ${this.employeeName} will be updated
+          ${this.translations.employeeEditor.modalMessage.part1}
+          ${this.employeeName}
+          ${this.translations.employeeEditor.modalMessage.part2}
         </span>
       </confirmation-modal>
     `;

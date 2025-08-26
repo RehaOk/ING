@@ -1,1 +1,60 @@
-{}
+{
+  "labels": {
+    "dateOfBirth": "Date of Birth",
+    "dateOfEmployment": "Date of Employment",
+    "department": "Department",
+    "email": "Email",
+    "firstName": "First Name",
+    "id": "Employee ID",
+    "lastName": "Last Name",
+    "phone": "Phone",
+    "position": "Position",
+    "actions": "Actions"
+  },
+  "navigation": {
+    "employees": "Employees",
+    "addNew": "Add New"
+  },
+  "messages": {
+    "noEmployees": "No employees found.",
+    "confirmDelete": "Are you sure you want to delete this employee?"
+  },
+  "employeeCard": {
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "employeeEditor": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "editInfo": "You are editing",
+    "modalMessage": {
+      "part1": "Selected Employee record of",
+      "part2": "will be updated"
+    }
+  },
+  "customInput": {
+    "selectPlaceHolder": "Please Select",
+    "fieldRequired": "This field is required"
+  },
+  "confirmationModal": {
+    "modalTitle": "Are You Sure?",
+    "proceed": "Proceed",
+    "cancel": "Cancel",
+    "modalMessage": {
+      "part1": "Selected Employee record of",
+      "part2": "will be deleted"
+    }
+  },
+  "createView": {
+    "addEmployee": "Add Employee"
+  },
+  "homeView": {
+    "employeeList": "Employee List"
+  },
+  "updateView": {
+    "editEmployee": "Edit Employee"
+  },
+  "index": {
+    "appTitle": "Employee Listing Application"
+  }
+}

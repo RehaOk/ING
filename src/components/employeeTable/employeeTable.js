@@ -8,25 +8,14 @@ import {
   setEmployeeListToDisplay,
   setCurrentPage,
 } from '../../slices/paginationSlice';
-
-const headers = [
-  'First Name',
-  'Last Name',
-  'Date of Employment',
-  'Date of Birth',
-  'Phone',
-  'Email',
-  'Department',
-  'Position',
-  'Actions',
-];
-
+import {getTableTitles} from './employeeTable.utils';
 class EmployeeTable extends LitElement {
   static styles = employeeTableStyles;
   static properties = {
     employeeList: {type: Array},
     employeeToDelete: {type: Object},
     employeeName: {type: String},
+    translations: {type: Object},
   };
 
   constructor() {
@@ -34,6 +23,25 @@ class EmployeeTable extends LitElement {
     this.employeeList = [];
     this.employeeToDelete = null;
     this.employeeName = '';
+    const {localization} = store.getState();
+    this.translations = localization.translations;
+    this.headerTitles = getTableTitles(this.translations.labels);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    const {localization} = store.getState();
+    this.locale = localization.locale;
+    this.unSubscribe = store.subscribe(() => {
+      const {localization} = store.getState();
+      this.translations = localization.translations;
+      this.headerTitles = getTableTitles(this.translations.labels);
+    });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.unSubscribe();
   }
 
   handleEditButtonClick(employeeId) {
@@ -77,7 +85,7 @@ class EmployeeTable extends LitElement {
           <table>
             <thead>
               <tr>
-                ${headers.map((header) => html`<th>${header}</th>`)}
+                ${this.headerTitles.map((header) => html`<th>${header}</th>`)}
               </tr>
             </thead>
             <tbody>

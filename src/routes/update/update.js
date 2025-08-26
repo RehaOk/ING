@@ -6,16 +6,27 @@ export class UpdateView extends LitElement {
   static styles = updateViewStyles;
   static properties = {
     id: {type: String},
+    translations: {type: Object},
   };
+
+  constructor() {
+    super();
+    const {localization} = store.getState();
+    this.translations = localization.translations;
+  }
 
   connectedCallback() {
     super.connectedCallback();
-    this.unsubscribe = store.subscribe(() => this.requestUpdate());
+    this.unSubscribe = store.subscribe(() => {
+      const {localization} = store.getState();
+      this.translations = localization.translations;
+      this.requestUpdate();
+    });
   }
 
   disconnectedCallback() {
-    this.unsubscribe();
     super.disconnectedCallback();
+    this.unSubscribe();
   }
 
   onAfterEnter(location) {
@@ -30,7 +41,9 @@ export class UpdateView extends LitElement {
   render() {
     return html`<page-navigation></page-navigation>
       <div class="update-view">
-        <h1 class="update-view__title">Edit Employee</h1>
+        <h1 class="update-view__title">
+          ${this.translations.updateView.editEmployee}
+        </h1>
         <employee-editor id=${this.id}></employee-editor>
       </div> `;
   }

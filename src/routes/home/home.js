@@ -18,12 +18,15 @@ export class HomeView extends LitElement {
   static properties = {
     employeeList: {type: Array},
     viewMode: {type: String},
+    translations: {type: Object},
   };
   constructor() {
     super();
     this.viewMode = 'grid';
     const {dispatch, getState} = store;
-    const {employee, pagination} = getState();
+    const {employee, pagination, localization} = getState();
+    this.translations = localization.translations;
+
     const start = (pagination.currentPage - 1) * pagination.itemsPerPage;
     const end = start + pagination.itemsPerPage;
     this.employeeList = employee.employeeList;
@@ -35,7 +38,8 @@ export class HomeView extends LitElement {
     const {dispatch, getState, subscribe} = store;
     const {employee, pagination} = getState();
     this.unSubscribe = subscribe(() => {
-      const {pagination} = getState();
+      const {pagination, localization} = getState();
+      this.translations = localization.translations;
       this.employeeList = pagination.employeeListToDisplay;
     });
 
@@ -47,9 +51,7 @@ export class HomeView extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    if (this.unSubscribe) {
-      this.unSubscribe();
-    }
+    this.unSubscribe();
   }
 
   handleViewModeChange(viewMode) {
@@ -71,7 +73,9 @@ export class HomeView extends LitElement {
     return html`<page-navigation></page-navigation>
       <div class="home">
         <div class="home__title-row">
-          <h1 class="home__title">Employee List</h1>
+          <h1 class="home__title">
+            ${this.translations.homeView.employeeList}
+          </h1>
           <div class="home__layout-buttons-wrapper">
             <button
               class="home__layout-button"

@@ -1,7 +1,6 @@
 import {LitElement, html} from 'lit';
 import {employeeCardStyles} from './employeeCard.styles';
 import {Router} from '@vaadin/router';
-import {userFriendlyLabels} from './employeeCard.contsants';
 import {store} from '../../store';
 import {deleteEmployeeData} from '../../slices/employeeSlice';
 import {
@@ -17,11 +16,29 @@ export class EmployeeCard extends LitElement {
     employee: {type: Object},
     formattedEmployees: {type: Array},
     isConfirmationModalActive: {type: Boolean},
+    translations: {type: Object},
   };
 
   constructor() {
     super();
     this.isConfirmationModalActive = false;
+    const {localization} = store.getState();
+    this.translations = localization.translations;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    const {localization} = store.getState();
+    this.locale = localization.locale;
+    this.unSubscribe = store.subscribe(() => {
+      const {localization} = store.getState();
+      this.translations = localization.translations;
+    });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.unSubscribe();
   }
 
   willUpdate() {
@@ -30,8 +47,8 @@ export class EmployeeCard extends LitElement {
       .reduce((acc, current, index, employeeList) => {
         if (index % 2 === 0) {
           const next = employeeList[index + 1];
-          current[0] = userFriendlyLabels['en'][current[0]]; // TODO: change for localization
-          next[0] = userFriendlyLabels['en'][next[0]];
+          current[0] = this.translations.labels[current[0]];
+          next[0] = this.translations.labels[next[0]];
           acc.push([
             [current[0], next[0]],
             [current[1], next[1]],
@@ -92,7 +109,7 @@ export class EmployeeCard extends LitElement {
             <span class="button__icon button__icon--edit"
               ><img src="./src/icons/pencilSquareIcon.svg" alt="Edit Icon"
             /></span>
-            Edit
+            ${this.translations.employeeCard.edit}
           </button>
           <button
             class="card__button card__button--primary"
@@ -101,7 +118,7 @@ export class EmployeeCard extends LitElement {
             <span class="button__icon button__icon--trash"
               ><img src="./src/icons/trashIcon.svg" alt="Delete Icon"
             /></span>
-            Delete
+            ${this.translations.employeeCard.delete}
           </button>
         </div>
       </div>

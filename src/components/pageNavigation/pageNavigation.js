@@ -2,14 +2,20 @@ import {LitElement, html} from 'lit';
 import {headerStyles} from './pageNavigation.styles';
 import {store} from '../../store';
 import {setLocale} from '../../slices/localizationSlice';
+import {BRAND_NAME} from './pageNavigation.constants';
 
-//TODO: Add Localization
 export class PageNavigation extends LitElement {
-  unSubscribe;
   static styles = headerStyles;
   static properties = {
     locale: {type: String},
+    translations: {type: Object},
   };
+
+  constructor() {
+    super();
+    const {localization} = store.getState();
+    this.translations = localization.translations;
+  }
 
   connectedCallback() {
     super.connectedCallback();
@@ -18,15 +24,14 @@ export class PageNavigation extends LitElement {
     this.unSubscribe = store.subscribe(() => {
       const {localization} = store.getState();
       this.locale = localization.locale;
-      this.requestUpdate();
+      this.translations = localization.translations;
+      this.requestUpdate(); // TODO: Test?
     });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    if (this.unSubscribe) {
-      this.unSubscribe();
-    }
+    this.unSubscribe();
   }
 
   toggleLocale() {
@@ -41,7 +46,7 @@ export class PageNavigation extends LitElement {
       <div class="header">
         <a href="/" class="header__brand">
           <img class="header__logo" src="./src/icons/logo.png" alt="ING Logo" />
-          <span class="header__title">ING</span>
+          <span class="header__title">${BRAND_NAME}</span>
         </a>
         <div class="header__actions">
           <a href="/" class="action-link"
@@ -49,14 +54,14 @@ export class PageNavigation extends LitElement {
               class="header__icon"
               src="./src/icons/employeeIcon.svg"
               alt="Employee Icon"
-            />Employees</a
+            />${this.translations.navigation.employees}</a
           >
           <a href="/add" class="action-link"
             ><img
               class="header__icon"
               src="./src/icons/plusIcon.svg"
               alt="Plus Icon"
-            />Add New</a
+            />${this.translations.navigation.addNew}</a
           >
           <button class="action-button" @click="${this.toggleLocale}">
             ${this.locale === 'en'

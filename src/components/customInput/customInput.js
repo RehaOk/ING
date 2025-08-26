@@ -7,6 +7,7 @@
 import {LitElement, html} from 'lit';
 import {customInputStyles} from './customInput.styles';
 import {classMap} from 'lit/directives/class-map.js';
+import {store} from '../../store';
 
 class CustomInput extends LitElement {
   static styles = customInputStyles;
@@ -21,6 +22,7 @@ class CustomInput extends LitElement {
     options: {type: Array},
     selectedValue: {type: String},
     errorHandler: {type: Object},
+    translations: {type: Object},
   };
 
   constructor() {
@@ -35,6 +37,24 @@ class CustomInput extends LitElement {
     this.errorHandler = {};
     this.name = '';
     this.selectedValue = '';
+
+    const {localization} = store.getState();
+    this.translations = localization.translations;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    const {localization} = store.getState();
+    this.locale = localization.locale;
+    this.unSubscribe = store.subscribe(() => {
+      const {localization} = store.getState();
+      this.translations = localization.translations;
+    });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.unSubscribe();
   }
 
   updated() {
@@ -80,7 +100,7 @@ class CustomInput extends LitElement {
                   @change="${this.handleInput}"
                 >
                   <option value="" disabled selected hidden>
-                    Please Select
+                    ${this.translations.customInput.selectPlaceHolder}
                   </option>
                   ${this.options.map(
                     (option) => html`
@@ -127,7 +147,7 @@ class CustomInput extends LitElement {
       }
     } else {
       if (this.required && !this.value) {
-        this.errorMessage = 'This field is required';
+        this.errorMessage = `${this.translations.customInput.fieldRequired}`;
       } else if (
         this.errorHandler.handle &&
         this.errorHandler.handle(this.value)

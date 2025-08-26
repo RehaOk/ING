@@ -47,9 +47,7 @@ export class PaginationComponent extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    if (this.unSubscribe) {
-      this.unSubscribe();
-    }
+    this.unSubscribe();
   }
 
   goToPage(pageNumber = this.currentPageNumber) {

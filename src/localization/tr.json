@@ -1,1 +1,60 @@
-{}
+{
+  "labels": {
+    "dateOfBirth": "Doğum Tarihi",
+    "dateOfEmployment": "İşe Giriş Tarihi",
+    "department": "Departman",
+    "email": "E-posta",
+    "firstName": "Ad",
+    "id": "Çalışan ID",
+    "lastName": "Soyad",
+    "phone": "Telefon",
+    "position": "Pozisyon",
+    "actions": "Aksiyonlar"
+  },
+  "navigation": {
+    "employees": "Çalışanlar",
+    "addNew": "Yeni Ekle"
+  },
+  "messages": {
+    "noEmployees": "Çalışan bulunamadı.",
+    "confirmDelete": "Bu çalışanı silmek istediğinizden emin misiniz?"
+  },
+  "employeeCard": {
+    "edit": "Düzenle",
+    "delete": "Sil"
+  },
+  "employeeEditor": {
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "editInfo": "Bu çalışan güncelleniyor",
+    "modalMessage": {
+      "part1": "Çalışan",
+      "part2": "güncellenecektir"
+    }
+  },
+  "customInput": {
+    "selectPlaceHolder": "Lütfen Seçiniz",
+    "fieldRequired": "Bu alan gereklidir"
+  },
+  "confirmationModal": {
+    "modalTitle": "Emin misiniz?",
+    "proceed": "İlerle",
+    "cancel": "İptal",
+    "modalMessage": {
+      "part1": "Çalışan",
+      "part2": "silinecektir"
+    }
+  },
+  "createView": {
+    "addEmployee": "Çalışan Ekle"
+  },
+  "homeView": {
+    "employeeList": "Çalışan Listesi"
+  },
+  "updateView": {
+    "editEmployee": "Çalışan Güncelle"
+  },
+  "index": {
+    "appTitle": "Çalışan Listeleme Uygulaması"
+  }
+}
