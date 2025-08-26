@@ -25,7 +25,6 @@ export class PageNavigation extends LitElement {
       const {localization} = store.getState();
       this.locale = localization.locale;
       this.translations = localization.translations;
-      this.requestUpdate(); // TODO: Test?
     });
   }
 

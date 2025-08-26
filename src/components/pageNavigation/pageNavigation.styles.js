@@ -10,8 +10,6 @@
     makes line of code smaller and makes files more readable.
 */
 
-// TODO: Reconsider Units
-
 import {css} from 'lit';
 
 export const headerStyles = css`

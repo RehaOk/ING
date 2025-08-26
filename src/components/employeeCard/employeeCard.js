@@ -42,20 +42,19 @@ export class EmployeeCard extends LitElement {
   }
 
   willUpdate() {
-    this.formattedEmployees = Object.entries(this.employee)
-      .filter(([key]) => key !== 'id') // TODO: maybe we dont need this logic connect store here
-      .reduce((acc, current, index, employeeList) => {
-        if (index % 2 === 0) {
-          const next = employeeList[index + 1];
-          current[0] = this.translations.labels[current[0]];
-          next[0] = this.translations.labels[next[0]];
-          acc.push([
-            [current[0], next[0]],
-            [current[1], next[1]],
-          ]);
-        }
-        return acc;
-      }, []);
+    const entries = Object.entries(this.employee).filter(
+      ([key]) => key !== 'id'
+    );
+    const labels = this.translations.labels;
+    this.formattedEmployees = [];
+    for (let i = 0; i < entries.length; i += 2) {
+      const [key1, value1] = entries[i];
+      const [key2, value2] = entries[i + 1] || [null, null];
+      this.formattedEmployees.push([
+        [labels[key1], labels[key2]],
+        [value1, value2],
+      ]);
+    }
   }
 
   handleEditButtonClick() {

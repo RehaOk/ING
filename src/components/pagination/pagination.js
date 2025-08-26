@@ -8,9 +8,8 @@ import {
 } from '../../slices/paginationSlice';
 import {classMap} from 'lit/directives/class-map.js';
 import {getEmployeeListToDisplay} from '../../utils';
+import {PAGE_NUMBER_OFFSET} from './pagination.constants.js';
 
-// TODO: Consider if making fields private was the right choice
-// TODO: Make magic numbers constant
 export class PaginationComponent extends LitElement {
   static styles = paginationStyles;
   static properties = {
@@ -72,8 +71,6 @@ export class PaginationComponent extends LitElement {
     if (this.currentPageNumber < totalPageNumber) {
       this.currentPageNumber += 1;
       this.goToPage();
-    } else {
-      // TODO: Disable Button
     }
   }
 
@@ -81,18 +78,15 @@ export class PaginationComponent extends LitElement {
     if (this.currentPageNumber > 1) {
       this.currentPageNumber -= 1;
       this.goToPage();
-    } else {
-      // TODO: Disable Button
     }
   }
 
   getPaginationNumbers() {
-    // TODO: Maybe convert into util function
     const {totalPageNumber} = store.getState().pagination;
     const pageNumbers = [];
     for (
-      let i = this.currentPageNumber - 5;
-      i <= this.currentPageNumber + 5;
+      let i = this.currentPageNumber - PAGE_NUMBER_OFFSET;
+      i <= this.currentPageNumber + PAGE_NUMBER_OFFSET;
       i++
     ) {
       if (totalPageNumber < i) {

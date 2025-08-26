@@ -21,7 +21,6 @@ export const generateUniqueId = () => {
   return `${Date.now()}-${Math.floor(Math.random() * 1000000)}`;
 };
 
-// TODO: Might carry these to constants file
 export const departmentInputErrorHandler = {
   handle: (value) => ![DEPARTMENT.ANALYTICS, DEPARTMENT.TECH].includes(value),
   message: 'Department name can be Analytics or Tech',

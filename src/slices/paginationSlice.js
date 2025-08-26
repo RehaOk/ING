@@ -19,7 +19,6 @@ const paginationSlice = createSlice({
     },
     setItemsPerPage(state, action) {
       // Prevent Divide By Zero on setTotalPageNumber
-      // TODO: Might Throw Error Think Later
       if (action.payload !== 0) {
         state.itemsPerPage = action.payload;
       }

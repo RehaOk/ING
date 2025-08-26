@@ -1,6 +1,5 @@
 import {css} from 'lit';
 
-// TODO: Reconsider Units
 export const paginationStyles = css`
   .pagination {
     display: flex;
