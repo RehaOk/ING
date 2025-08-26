@@ -15,6 +15,12 @@ export const employeeTableStyles = css`
     }
   }
 
+  .employee-table__action-button {
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+  }
+
   table {
     width: 100%;
     min-width: 500px;

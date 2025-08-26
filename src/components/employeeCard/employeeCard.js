@@ -90,7 +90,7 @@ export class EmployeeCard extends LitElement {
             @click=${this.handleEditButtonClick}
           >
             <span class="button__icon button__icon--edit"
-              ><img src="./src/icons/pencilSquare.svg" alt="Edit Icon"
+              ><img src="./src/icons/pencilSquareIcon.svg" alt="Edit Icon"
             /></span>
             Edit
           </button>
