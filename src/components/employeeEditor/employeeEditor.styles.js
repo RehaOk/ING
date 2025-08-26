@@ -10,6 +10,13 @@ export const employeeEditorStyles = css`
     min-height: 600px;
   }
 
+  .input__edit-info {
+    position: absolute;
+    top: 113px;
+    left: 47px;
+    font-size: 11px;
+  }
+
   .input__column {
     display: flex;
     column-gap: 10%;

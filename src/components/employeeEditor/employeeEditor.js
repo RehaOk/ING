@@ -111,7 +111,9 @@ export class EmployeeEditor extends LitElement {
     return html`
       <div class="input__container">
         ${this.id
-          ? html`<p>You are editing ${this.firstName} ${this.lastName}</p>`
+          ? html`<p class="input__edit-info">
+              You are editing ${this.firstName} ${this.lastName}
+            </p>`
           : null}
         <form @submit=${this.handleSubmit}>
           <div class="input__column">
