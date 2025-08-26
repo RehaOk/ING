@@ -57,7 +57,7 @@ export class ConfirmationModal extends LitElement {
                 <img src="./src/icons/xIcon.svg" alt="Close Icon" />
               </button>
             </div>
-            <p>
+            <p class="modal__message">
               <slot name="message">
                 ${this.translations.confirmationModal.modalMessage.part1}
                 ${this.employeeName}

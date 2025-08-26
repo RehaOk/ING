@@ -43,6 +43,7 @@ export class EmployeeEditor extends LitElement {
     this.isConfirmationModalActive = false;
     const {localization} = store.getState();
     this.translations = localization.translations;
+    this.inputs = [];
   }
 
   connectedCallback() {
@@ -74,7 +75,7 @@ export class EmployeeEditor extends LitElement {
       this.dateOfEmployment = formatDate(dateOfEmployment, '/');
       this.dateOfBirth = formatDate(dateOfBirth, '/');
       this.employeeName = `${firstName} ${lastName}`;
-
+      this.inputs = [];
       if (this.firstName === undefined) {
         // Since there is an input check, any of the fields must not be undefined
         // If there is an undefined it means rest is undefined since id is wrong
@@ -94,8 +95,8 @@ export class EmployeeEditor extends LitElement {
   }
 
   displayConfirmationModal() {
-    const inputs = Array.from(this.shadowRoot.querySelectorAll('custom-input'));
-    this.isFormValid = inputs.every((input) => input.isValid());
+    this.inputs = Array.from(this.shadowRoot.querySelectorAll('custom-input'));
+    this.isFormValid = this.inputs.every((input) => input.isValid());
     if (!this.isConfirmationModalActive && this.isFormValid) {
       this.isConfirmationModalActive = true;
     }
@@ -104,7 +105,7 @@ export class EmployeeEditor extends LitElement {
   handleConfirmationModalConfirm() {
     const {dispatch} = store;
     const submittedEmployeeData = {};
-    inputs.forEach(({name, value, selectedValue}) => {
+    this.inputs.forEach(({name, value, selectedValue}) => {
       if (selectedValue) {
         if (value) {
           submittedEmployeeData[name] = value;

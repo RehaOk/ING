@@ -26,6 +26,7 @@ export const confirmationModalStyles = css`
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 10;
   }
+
   .modal {
     position: relative;
     background-color: white;
@@ -36,14 +37,21 @@ export const confirmationModalStyles = css`
     box-shadow: 0 0.125rem 0.75rem rgba(0, 0, 0, 0.25);
     margin: 1rem;
   }
+
   .modal__title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: 1.3rem;
+    font-weight: 500;
     color: var(--primary-color);
   }
+
+  .modal__message {
+    font-size: 0.8rem;
+    color: #5f5f5f;
+  }
+
   .modal__close-button {
     border: none;
     background: none;
@@ -59,11 +67,9 @@ export const confirmationModalStyles = css`
   .modal__button {
     cursor: pointer;
     width: 100%;
-    height: 2.5rem;
+    height: 2rem;
     border-radius: 0.5rem;
-    font-size: 1rem;
     font-weight: 600;
-    padding: 0.75rem;
     margin-bottom: 0.5rem;
   }
 
@@ -72,6 +78,7 @@ export const confirmationModalStyles = css`
     background-color: var(--primary-color);
     border: 1px solid var(--primary-color);
   }
+
   .modal__button--cancel {
     color: var(--secondary-color);
     background-color: white;
