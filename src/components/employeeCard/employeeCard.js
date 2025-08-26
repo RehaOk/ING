@@ -59,6 +59,10 @@ export class EmployeeCard extends LitElement {
     }
   }
 
+  handleConfirmationModalCancel() {
+    this.isConfirmationModalActive = false;
+  }
+
   displayConfirmationModal() {
     if (!this.isConfirmationModalActive) {
       this.isConfirmationModalActive = true;
@@ -105,6 +109,7 @@ export class EmployeeCard extends LitElement {
         ?isActive=${this.isConfirmationModalActive}
         employeeName=${`${this.employee.firstName} ${this.employee.lastName}`}
         .onConfirm=${() => this.handleDeleteButtonClick(this.employee.id)}
+        .onCancel=${this.handleConfirmationModalCancel.bind(this)}
       ></confirmation-modal>
     `;
   }

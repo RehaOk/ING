@@ -9,15 +9,12 @@ export class ConfirmationModal extends LitElement {
     employeeName: {type: String},
     isActive: {type: Boolean, reflect: true},
     onConfirm: {type: Function},
+    onCancel: {type: Function},
   };
 
   constructor() {
     super();
     this.employee = '';
-    this.isActive = false;
-  }
-
-  handleOnCancel() {
     this.isActive = false;
   }
 
@@ -35,7 +32,7 @@ export class ConfirmationModal extends LitElement {
               <button
                 type="button"
                 class="modal__close-button"
-                @click=${this.handleOnCancel}
+                @click=${this.onCancel}
                 aria-label="Close"
               >
                 <img src="./src/icons/xIcon.svg" alt="Close Icon" />
@@ -57,7 +54,7 @@ export class ConfirmationModal extends LitElement {
             <button
               type="button"
               class="modal__button modal__button--cancel"
-              @click=${this.handleOnCancel}
+              @click=${this.onCancel}
             >
               Cancel
             </button>
