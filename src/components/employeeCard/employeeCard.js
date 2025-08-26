@@ -45,7 +45,7 @@ export class EmployeeCard extends LitElement {
     Router.go(`/update?id=${this.employee.id}`);
   }
 
-  handleDeleteButtonClick(employeeId) {
+  handleConfirmationModalConfirm(employeeId) {
     const {dispatch, getState} = store;
     dispatch(deleteEmployeeData(employeeId));
     this.isConfirmationModalActive = false;
@@ -108,7 +108,8 @@ export class EmployeeCard extends LitElement {
       <confirmation-modal
         ?isActive=${this.isConfirmationModalActive}
         employeeName=${`${this.employee.firstName} ${this.employee.lastName}`}
-        .onConfirm=${() => this.handleDeleteButtonClick(this.employee.id)}
+        .onConfirm=${() =>
+          this.handleConfirmationModalConfirm(this.employee.id)}
         .onCancel=${this.handleConfirmationModalCancel.bind(this)}
       ></confirmation-modal>
     `;

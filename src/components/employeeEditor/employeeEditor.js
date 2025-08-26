@@ -37,11 +37,14 @@ export class EmployeeEditor extends LitElement {
     email: {type: String},
     department: {type: String},
     position: {type: String},
+    employeeName: {type: String},
+    isConfirmationModalActive: {type: Boolean},
   };
 
   constructor() {
     super();
     this.isFormValid = false;
+    this.isConfirmationModalActive = false;
   }
 
   connectedCallback() {
@@ -66,6 +69,8 @@ export class EmployeeEditor extends LitElement {
       this.position = position;
       this.dateOfEmployment = formatDate(dateOfEmployment, '/');
       this.dateOfBirth = formatDate(dateOfBirth, '/');
+      this.employeeName = `${firstName} ${lastName}`;
+
       if (this.firstName === undefined) {
         // Since there is an input check, any of the fields must not be undefined
         // If there is an undefined it means rest is undefined since id is wrong
@@ -74,7 +79,18 @@ export class EmployeeEditor extends LitElement {
     }
   }
 
-  handleSubmit() {
+  handleConfirmationModalCancel() {
+    this.isConfirmationModalActive = false;
+    this.handleCancel();
+  }
+
+  displayConfirmationModal() {
+    if (!this.isConfirmationModalActive) {
+      this.isConfirmationModalActive = true;
+    }
+  }
+
+  handleConfirmationModalConfirm() {
     const inputs = Array.from(this.shadowRoot.querySelectorAll('custom-input'));
     this.isFormValid = inputs.every((input) => input.isValid());
     if (this.isFormValid) {
@@ -222,7 +238,7 @@ export class EmployeeEditor extends LitElement {
           <div class="input__buttons">
             <button
               type="button"
-              @click=${this.handleSubmit}
+              @click=${this.displayConfirmationModal}
               class="input__button input__button--primary"
             >
               Save
@@ -237,6 +253,15 @@ export class EmployeeEditor extends LitElement {
           </div>
         </form>
       </div>
+      <confirmation-modal
+        ?isActive=${this.isConfirmationModalActive}
+        .onConfirm=${this.handleConfirmationModalConfirm.bind(this)}
+        .onCancel=${this.handleConfirmationModalCancel.bind(this)}
+      >
+        <span slot="message">
+          Selected Employee record of ${this.employeeName} will be updated
+        </span>
+      </confirmation-modal>
     `;
   }
 }
