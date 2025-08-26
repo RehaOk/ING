@@ -94,48 +94,45 @@ export class EmployeeEditor extends LitElement {
   }
 
   displayConfirmationModal() {
-    if (!this.isConfirmationModalActive) {
+    const inputs = Array.from(this.shadowRoot.querySelectorAll('custom-input'));
+    this.isFormValid = inputs.every((input) => input.isValid());
+    if (!this.isConfirmationModalActive && this.isFormValid) {
       this.isConfirmationModalActive = true;
     }
   }
 
   handleConfirmationModalConfirm() {
-    const inputs = Array.from(this.shadowRoot.querySelectorAll('custom-input'));
-    this.isFormValid = inputs.every((input) => input.isValid());
-    if (this.isFormValid) {
-      const {dispatch} = store;
-      const submittedEmployeeData = {};
-      inputs.forEach(({name, value, selectedValue}) => {
-        // TODO: try to change this logic
-        if (selectedValue) {
-          if (value) {
-            submittedEmployeeData[name] = value;
-          } else {
-            submittedEmployeeData[name] = selectedValue;
-          }
-        } else {
+    const {dispatch} = store;
+    const submittedEmployeeData = {};
+    inputs.forEach(({name, value, selectedValue}) => {
+      if (selectedValue) {
+        if (value) {
           submittedEmployeeData[name] = value;
+        } else {
+          submittedEmployeeData[name] = selectedValue;
         }
-      });
-      submittedEmployeeData.dateOfEmployment = formatDate(
-        submittedEmployeeData.dateOfEmployment,
-        '-'
-      );
-      submittedEmployeeData.dateOfBirth = formatDate(
-        submittedEmployeeData.dateOfBirth,
-        '-'
-      );
-      if (this.id) {
-        // We are in update mode
-        submittedEmployeeData.id = this.id;
-        dispatch(updateEmployeeData(submittedEmployeeData));
       } else {
-        // We are in create mode
-        submittedEmployeeData.id = generateUniqueId();
-        dispatch(createEmployeeData(submittedEmployeeData));
+        submittedEmployeeData[name] = value;
       }
-      Router.go('/');
+    });
+    submittedEmployeeData.dateOfEmployment = formatDate(
+      submittedEmployeeData.dateOfEmployment,
+      '-'
+    );
+    submittedEmployeeData.dateOfBirth = formatDate(
+      submittedEmployeeData.dateOfBirth,
+      '-'
+    );
+    if (this.id) {
+      // We are in update mode
+      submittedEmployeeData.id = this.id;
+      dispatch(updateEmployeeData(submittedEmployeeData));
+    } else {
+      // We are in create mode
+      submittedEmployeeData.id = generateUniqueId();
+      dispatch(createEmployeeData(submittedEmployeeData));
     }
+    Router.go('/');
   }
 
   handleCancel() {

@@ -6,7 +6,7 @@ export class ConfirmationModal extends LitElement {
   static styles = confirmationModalStyles;
   static properties = {
     employeeName: {type: String},
-    isActive: {type: Boolean, reflect: true},
+    isActive: {type: Boolean},
     onConfirm: {type: Function},
     onCancel: {type: Function},
     translations: {type: Object},
