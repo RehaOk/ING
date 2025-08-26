@@ -34,6 +34,7 @@ class CustomInput extends LitElement {
     this.touched = false;
     this.errorHandler = {};
     this.name = '';
+    this.selectedValue = '';
   }
 
   updated() {
@@ -74,7 +75,7 @@ class CustomInput extends LitElement {
                 <select
                   id=${this.id}
                   name=${this.name}
-                  .value="${this.value}"
+                  .value="${this.selectedValue}"
                   @click="${this.handleInput}"
                   @change="${this.handleInput}"
                 >
@@ -115,17 +116,27 @@ class CustomInput extends LitElement {
   }
 
   validate() {
-    if (this.required && !this.value) {
-      this.errorMessage = 'This field is required';
-    } else if (
-      this.errorHandler.handle &&
-      this.errorHandler.handle(this.value)
-    ) {
-      this.errorMessage = this.errorHandler.message;
+    if (this.type === 'select') {
+      if (
+        this.errorHandler.handle &&
+        this.errorHandler.handle(this.selectedValue)
+      ) {
+        this.errorMessage = this.errorHandler.message;
+      } else {
+        this.errorMessage = '';
+      }
     } else {
-      this.errorMessage = '';
+      if (this.required && !this.value) {
+        this.errorMessage = 'This field is required';
+      } else if (
+        this.errorHandler.handle &&
+        this.errorHandler.handle(this.value)
+      ) {
+        this.errorMessage = this.errorHandler.message;
+      } else {
+        this.errorMessage = '';
+      }
     }
-
     if (!this.touched) {
       this.touched = true;
     }
