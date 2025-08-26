@@ -15,10 +15,6 @@
     "employees": "Çalışanlar",
     "addNew": "Yeni Ekle"
   },
-  "messages": {
-    "noEmployees": "Çalışan bulunamadı.",
-    "confirmDelete": "Bu çalışanı silmek istediğinizden emin misiniz?"
-  },
   "employeeCard": {
     "edit": "Düzenle",
     "delete": "Sil"
