@@ -31,6 +31,8 @@ export const employeeCardStyles = css`
     grid-template-areas: 'left right';
     grid-template-columns: 1fr 1fr;
     margin-top: 1.3rem;
+    gap: 10px;
+    word-break: break-word;
   }
 
   .card__info--left {
