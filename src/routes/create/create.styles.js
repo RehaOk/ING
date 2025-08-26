@@ -11,6 +11,6 @@ export const createViewStyles = css`
     color: var(--primary-color);
     font-weight: 500;
     font-size: 1.3rem;
-    margin-left: 15px;
+    margin-left: 0.9rem;
   }
 `;

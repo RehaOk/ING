@@ -16,7 +16,7 @@ export const homeViewStyles = css`
     color: var(--primary-color);
     font-weight: 500;
     font-size: 1.3rem;
-    margin-left: 15px;
+    margin-left: 0.9rem;
   }
 
   .home__layout-buttons-wrapper {
@@ -40,7 +40,7 @@ export const homeViewStyles = css`
     column-gap: 7rem;
     row-gap: 2rem;
     margin-top: 1.25rem;
-    min-height: 662px;
+    min-height: 41rem;
     @media (max-width: 1200px) {
       justify-content: flex-start;
     }
@@ -48,6 +48,6 @@ export const homeViewStyles = css`
 
   .home__table-container {
     margin-top: 1.25rem;
-    min-height: 662px;
+    min-height: 41rem;
   }
 `;

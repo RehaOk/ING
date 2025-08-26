@@ -23,7 +23,7 @@ export const customInputStyles = css`
   .custom-input {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
+    margin-bottom: 0.9rem;
   }
 
   .custom-input__input-wrapper {
@@ -33,23 +33,23 @@ export const customInputStyles = css`
   }
 
   .custom-input__input-wrapper input {
-    height: 10px;
-    padding: 10px;
+    height: 0.6rem;
+    padding: 0.6rem;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 0.25rem;
+    font-size: 1rem;
     width: 100%;
   }
 
   .custom-input__input-wrapper--date input {
-    padding: 10px 1px;
+    padding: 0.6rem 0.06rem;
   }
 
   .custom-input__input-wrapper select {
-    height: 32px;
+    height: 2rem;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 0.25rem;
+    font-size: 1rem;
     width: 100%;
   }
 
@@ -59,14 +59,14 @@ export const customInputStyles = css`
 
   .custom-input__error-message {
     color: red;
-    font-size: 12px;
-    margin-top: 5px;
+    font-size: 0.75rem;
+    margin-top: 0.3rem;
   }
 
   .custom-input__label {
-    font-size: 12px;
+    font-size: 0.75rem;
     display: flex;
     flex-direction: column;
-    row-gap: 5px;
+    row-gap: 0.3rem;
   }
 `;

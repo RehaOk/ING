@@ -4,23 +4,23 @@ export const employeeEditorStyles = css`
   .input__container {
     margin-top: 1.25rem;
     background-color: white;
-    border-radius: 3px;
-    padding: 50px;
+    border-radius: 0.2rem;
+    padding: 3rem;
     height: auto;
-    min-height: 600px;
+    min-height: 37.5rem;
   }
 
   .input__edit-info {
     position: absolute;
-    top: 113px;
-    left: 47px;
-    font-size: 11px;
+    top: 7rem;
+    left: 3rem;
+    font-size: 0.7rem;
   }
 
   .input__column {
     display: flex;
     column-gap: 10%;
-    margin-bottom: 50px;
+    margin-bottom: 3rem;
     @media (max-width: 768px) {
       flex-direction: column;
       margin-bottom: initial;
@@ -31,18 +31,18 @@ export const employeeEditorStyles = css`
     display: flex;
     flex-direction: column;
     flex: 0 1 25%;
-    row-gap: 5px;
+    row-gap: 0.3rem;
   }
 
   .input__buttons {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    gap: 3rem;
     @media (max-width: 768px) {
-      margin-top: 10px;
+      margin-top: 0.6rem;
       flex-direction: column;
-      gap: 10px;
+      gap: 0.6rem;
     }
   }
 
@@ -56,7 +56,7 @@ export const employeeEditorStyles = css`
     font-size: 1rem;
     font-weight: 600;
     padding: 0.75rem;
-    width: 200px;
+    width: 12.5rem;
     @media (max-width: 768px) {
       width: 100%;
     }

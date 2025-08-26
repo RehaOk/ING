@@ -3,7 +3,7 @@ import {css} from 'lit';
 export const employeeTableStyles = css`
   .employee-table {
     background-color: white;
-    border-radius: 3px;
+    border-radius: 0.2rem;
     height: auto;
   }
 
@@ -23,34 +23,34 @@ export const employeeTableStyles = css`
 
   table {
     width: 100%;
-    min-width: 500px;
+    min-width: 31rem;
     overflow-x: auto;
-    font-size: 14px;
+    font-size: 0.87rem;
   }
 
   td,
   th {
-    padding: 20px;
+    padding: 1.25rem;
     border-bottom: 1px solid #e8e8e8;
     text-align: center;
-    height: 25px;
+    height: 1.5rem;
   }
 
   td {
     word-break: break-word;
-    font-size: 13px;
+    font-size: 0.8rem;
   }
 
   th {
     color: var(--primary-color);
     font-weight: 500;
-    font-size: 11px;
+    font-size: 0.7rem;
   }
 
   @media (max-width: 768px) {
     td,
     th {
-      padding: 5px;
+      padding: 0.3rem;
       border-bottom: 1px solid #e8e8e8;
       text-align: center;
     }

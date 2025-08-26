@@ -29,11 +29,11 @@ export const confirmationModalStyles = css`
   .modal {
     position: relative;
     background-color: white;
-    border-radius: 3px;
+    border-radius: 0.2rem;
     width: 90%;
-    max-width: 450px;
+    max-width: 28rem;
     padding: 1rem;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0.125rem 0.75rem rgba(0, 0, 0, 0.25);
     margin: 1rem;
   }
   .modal__title {
@@ -60,7 +60,7 @@ export const confirmationModalStyles = css`
     cursor: pointer;
     width: 100%;
     height: 2.5rem;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     font-size: 1rem;
     font-weight: 600;
     padding: 0.75rem;

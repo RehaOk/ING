@@ -16,7 +16,7 @@ export const employeeCardStyles = css`
   .card {
     width: 36vw;
     min-width: 12.5rem;
-    box-shadow: 1px 1px 2px 1px rgba(90, 90, 90, 0.1);
+    box-shadow: 0.0625rem 0.0625rem 0.125rem 0.0625rem rgba(90, 90, 90, 0.1);
     padding: 0.25rem 0.6rem 1.25rem 0.6rem;
     background-color: white;
 
@@ -31,7 +31,7 @@ export const employeeCardStyles = css`
     grid-template-areas: 'left right';
     grid-template-columns: 1fr 1fr;
     margin-top: 1.3rem;
-    gap: 10px;
+    gap: 0.6rem;
     word-break: break-word;
   }
 
