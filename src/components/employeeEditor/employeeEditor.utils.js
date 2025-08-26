@@ -1,7 +1,4 @@
-import {
-  DEPARTMANT_VALUE_TECH,
-  DEPARTMANT_VALUE_ANALYTICS,
-} from '../../constants';
+import {DEPARTMENT, POSITIONS} from '../../constants';
 import {
   NAME_INPUT_REGEX,
   PHONE_INPUT_NUMBER_REGEX,
@@ -26,9 +23,14 @@ export const generateUniqueId = () => {
 
 // TODO: Might carry these to constants file
 export const departmentInputErrorHandler = {
-  handle: (value) =>
-    ![DEPARTMANT_VALUE_ANALYTICS, DEPARTMANT_VALUE_TECH].includes(value),
+  handle: (value) => ![DEPARTMENT.ANALYTICS, DEPARTMENT.TECH].includes(value),
   message: 'Department name can be Analytics or Tech',
+};
+
+export const positionInputErrorHandler = {
+  handle: (value) =>
+    ![POSITIONS.JUNIOR, POSITIONS.MEDIOR, POSITIONS.SENIOR].includes(value),
+  message: 'Position name must be selected',
 };
 
 export const phoneInputErrorHandler = {

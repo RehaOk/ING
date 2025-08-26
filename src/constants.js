@@ -1,2 +1,9 @@
-export const DEPARTMANT_VALUE_ANALYTICS = 'Analytics';
-export const DEPARTMANT_VALUE_TECH = 'Tech';
+export const DEPARTMENT = {
+  ANALYTICS: 'Analytics',
+  TECH: 'Tech',
+};
+export const POSITIONS = {
+  JUNIOR: 'Junior',
+  MEDIOR: 'Medior',
+  SENIOR: 'Senior',
+};

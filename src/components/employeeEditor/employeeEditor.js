@@ -9,6 +9,7 @@ import {
 } from '../../slices/employeeSlice';
 import {
   departmentInputErrorHandler,
+  positionInputErrorHandler,
   emailInputErrorHandler,
   lastNameInputErrorHandler,
   nameInputErrorHandler,
@@ -79,8 +80,17 @@ export class EmployeeEditor extends LitElement {
     if (this.isFormValid) {
       const {dispatch} = store;
       const submittedEmployeeData = {};
-      inputs.forEach(({name, value}) => {
-        submittedEmployeeData[name] = value;
+      inputs.forEach(({name, value, selectedValue}) => {
+        // TODO: try to change this logic
+        if (selectedValue) {
+          if (value) {
+            submittedEmployeeData[name] = value;
+          } else {
+            submittedEmployeeData[name] = selectedValue;
+          }
+        } else {
+          submittedEmployeeData[name] = value;
+        }
       });
       submittedEmployeeData.dateOfEmployment = formatDate(
         submittedEmployeeData.dateOfEmployment,
@@ -203,7 +213,8 @@ export class EmployeeEditor extends LitElement {
                 type="select"
                 label="Position"
                 options=${positionList}
-                value=${this.position || ''}
+                selectedValue=${this.position || ''}
+                .errorHandler=${positionInputErrorHandler}
                 required
               ></custom-input>
             </div>
