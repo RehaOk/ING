@@ -1,4 +1,38 @@
+# Note
+
+Throughout this project, I have intentionally minimized the use of external libraries, with the exception of Redux. Based on my understanding of the HR meeting, the focus was on strong fundamental skills. Therefore, I avoided third-party solutions—including component libraries (e.g., for table views or image handling) and testing utilities—wherever possible, in order to demonstrate proficiency with core JavaScript and web component concepts.
+
+## Setup
+
+Install dependencies:
+
+```bash
+npm i
+```
+
+## Running the Project
+
+Start the development server with:
+
+```bash
+npm run serve
+```
+
+## Coverage Results
+
+- **Code Coverage:** 92.1%
+
+![Coverage Report](./other/coverage.png)
+
+You can generate the coverage report by running:
+
+```bash
+npm run test:coverage
+```
+
 # LitElement JavaScript starter
+
+**This project is based on the LitElement JavaScript Starter template. All conditions, guidelines, and recommendations from the original starter project still apply.**
 
 This project includes a sample component using LitElement with JavaScript.
 
@@ -21,14 +55,6 @@ Lit 3.0 should require no changes to upgrade from Lit 2.0 for the vast majority 
 Lit 2.x and 3.0 are _interoperable_: templates, base classes, directives, decorators, etc., from one version of Lit will work with those from another.
 
 Please file any issues you find on our [issue tracker](https://github.com/lit/lit/issues).
-
-## Setup
-
-Install dependencies:
-
-```bash
-npm i
-```
 
 ## Testing
 
