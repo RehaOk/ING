@@ -64,7 +64,7 @@ export const employeeCardStyles = css`
     font-size: 1rem;
     font-weight: 600;
     padding: 0.75rem;
-    width: 5rem;
+    width: 5.5rem;
   }
 
   .button__icon {
