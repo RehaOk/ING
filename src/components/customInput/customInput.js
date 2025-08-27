@@ -81,23 +81,23 @@ export class CustomInput extends LitElement {
                 <input
                   id=${this.id}
                   name=${this.name}
-                  type="${this.type}"
-                  .value="${this.value}"
-                  @input="${this.handleInput}"
-                  @blur="${this.validate}"
-                  ?required="${this.required}"
-                  .aria-describedby="${this.errorMessage
+                  type=${this.type}
+                  .value=${this.value}
+                  @input=${this.handleInput}
+                  @blur=${this.validate}
+                  ?required=${this.required}
+                  .aria-describedby=${this.errorMessage
                     ? 'error-' + this.id
-                    : ''}"
+                    : ''}
                 />
               </div>`
             : html`<div class="custom-input__input-wrapper">
                 <select
                   id=${this.id}
                   name=${this.name}
-                  .value="${this.selectedValue}"
-                  @click="${this.handleInput}"
-                  @change="${this.handleInput}"
+                  .value=${this.selectedValue}
+                  @click=${this.handleInput}
+                  @change=${this.handleInput}
                 >
                   <option value="" disabled selected hidden>
                     ${this.translations.customInput.selectPlaceHolder}
@@ -105,7 +105,7 @@ export class CustomInput extends LitElement {
                   ${this.options.map(
                     (option) => html`
                       <option
-                        .value="${option.value}"
+                        .value=${option.value}
                         .selected="${this.selectedValue === option.value}"
                       >
                         ${option.label}
