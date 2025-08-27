@@ -20,7 +20,7 @@ npm run serve
 
 ## Coverage Results
 
-- **Code Coverage:** 92.1%
+- **Code Coverage:** 91.99%
 
 ![Coverage Report](./other/coverage.png)
 
