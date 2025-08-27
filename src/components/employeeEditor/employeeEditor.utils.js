@@ -19,12 +19,11 @@ export const formatDate = (date, delimiter) => {
    Instead of crypto.randomUUID(); since all browsers do not support it yet and it would need a polyfill
    and also i didn't want to add any extra dependencies */
 
-/* 
-  Messages are not reactive when localization changes after initialization, can't fix it because I ran out of time.
-*/
 export const generateUniqueId = () => {
   return `${Date.now()}-${Math.floor(Math.random() * 1000000)}`;
 };
+
+/* Messages are not reactive when localization changes after initialization, can't fix it because I ran out of time. */
 
 export const departmentInputErrorHandler = {
   handle: (value) => ![DEPARTMENT.ANALYTICS, DEPARTMENT.TECH].includes(value),
