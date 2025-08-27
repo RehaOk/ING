@@ -26,6 +26,14 @@
     "modalMessage": {
       "part1": "Selected Employee record of",
       "part2": "will be updated"
+    },
+    "errorMessages": {
+      "department": "Department name can be Analytics or Tech",
+      "position": "Position name must be selected",
+      "phone": "Please enter a valid phone number",
+      "email": "Please enter a valid email address",
+      "name": "Please enter a valid name",
+      "lastName": "Please enter a valid last name"
     }
   },
   "customInput": {

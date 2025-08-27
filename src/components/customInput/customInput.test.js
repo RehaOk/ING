@@ -191,7 +191,7 @@ suite('custom-input', () => {
     `);
     el.errorHandler = {
       handle: (val) => val === '',
-      message: 'Select required',
+      message: () => 'Select required',
     };
     el.validate();
     assert.equal(el.errorMessage, 'Select required');

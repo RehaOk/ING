@@ -26,6 +26,14 @@
     "modalMessage": {
       "part1": "Çalışan",
       "part2": "güncellenecektir"
+    },
+    "errorMessages": {
+      "department": "Departman adı sadece Analytics ya da Tech olabilir",
+      "position": "Pozisyon seçilmelidir",
+      "phone": "Lütfen geçerli bir telefon numarası giriniz",
+      "email": "Lğütfen geçerli bir e-posta adresi giriniz",
+      "name": "Lütfen geçerli bir ad giriniz",
+      "lastName": "Lütfen geçerli bir soyad giriniz"
     }
   },
   "customInput": {

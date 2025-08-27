@@ -141,7 +141,7 @@ export class CustomInput extends LitElement {
         this.errorHandler.handle &&
         this.errorHandler.handle(this.selectedValue)
       ) {
-        this.errorMessage = this.errorHandler.message;
+        this.errorMessage = this.errorHandler.message();
       } else {
         this.errorMessage = '';
       }
@@ -152,7 +152,7 @@ export class CustomInput extends LitElement {
         this.errorHandler.handle &&
         this.errorHandler.handle(this.value)
       ) {
-        this.errorMessage = this.errorHandler.message;
+        this.errorMessage = this.errorHandler.message();
       } else {
         this.errorMessage = '';
       }
