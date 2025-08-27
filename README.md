@@ -1,6 +1,6 @@
 # Note
 
-Throughout this project, I have intentionally minimized the use of external libraries, with the exception of Redux. Based on my understanding of the HR meeting, the focus was on strong fundamental skills. Therefore, I avoided third-party solutions—including component libraries (e.g., for table views or image handling) and testing utilities—wherever possible, in order to demonstrate proficiency with core JavaScript and web component concepts.
+Throughout this project, I have intentionally minimized the use of external libraries, with the exception of Redux. Based on my understanding of the HR meeting, the focus was on strong fundamental skills. Therefore, I avoided third-party solutions including component libraries (e.g., for table views or image handling) and testing utilities wherever possible, in order to demonstrate proficiency with core JavaScript and web component concepts.
 
 ## Setup
 
