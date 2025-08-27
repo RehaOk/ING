@@ -55,7 +55,7 @@ export const employeeCardStyles = css`
 
   .card__button {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     cursor: pointer;
     max-width: 6rem;
@@ -64,18 +64,11 @@ export const employeeCardStyles = css`
     font-size: 1rem;
     font-weight: 600;
     padding: 0.75rem;
+    width: 5rem;
   }
 
-  .button__icon > svg {
-    position: relative;
-    overflow: unset;
-    margin-right: 0.8rem;
-  }
-
-  .button__icon--edit > svg {
-    width: 0.4rem;
-    height: 0.4rem;
-    bottom: 0.3125rem;
+  .button__icon {
+    margin-right: 0.3rem;
   }
 
   .button__icon--trash > svg {
