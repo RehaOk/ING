@@ -1,7 +1,7 @@
 import {LitElement, html} from 'lit';
 import {employeeTableStyles} from './employeeTable.styles';
 import {Router} from '@vaadin/router';
-import {store} from '../../store';
+import {store as realStore} from '../../store';
 import {deleteEmployeeData} from '../../slices/employeeSlice';
 import {
   setTotalPageNumber,
@@ -10,7 +10,7 @@ import {
 } from '../../slices/paginationSlice';
 import {getTableTitles} from './employeeTable.utils';
 import {getEmployeeListToDisplay} from '../../utils';
-class EmployeeTable extends LitElement {
+export class EmployeeTable extends LitElement {
   static styles = employeeTableStyles;
   static properties = {
     employeeList: {type: Array},
@@ -19,22 +19,23 @@ class EmployeeTable extends LitElement {
     translations: {type: Object},
   };
 
-  constructor() {
+  constructor(store = realStore) {
     super();
+    this._store = store;
     this.employeeList = [];
     this.employeeToDelete = null;
     this.employeeName = '';
-    const {localization} = store.getState();
+    const {localization} = this._store.getState();
     this.translations = localization.translations;
     this.headerTitles = getTableTitles(this.translations.labels);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    const {localization} = store.getState();
+    const {localization} = this._store.getState();
     this.locale = localization.locale;
-    this.unSubscribe = store.subscribe(() => {
-      const {localization} = store.getState();
+    this.unSubscribe = this._store.subscribe(() => {
+      const {localization} = this._store.getState();
       this.translations = localization.translations;
       this.headerTitles = getTableTitles(this.translations.labels);
     });
@@ -50,7 +51,7 @@ class EmployeeTable extends LitElement {
   }
 
   handleConfirmationModalConfirm(employeeId) {
-    const {dispatch, getState} = store;
+    const {dispatch, getState} = this._store;
     dispatch(deleteEmployeeData(employeeId));
     this.isConfirmationModalActive = false;
     const {employee, pagination} = getState();

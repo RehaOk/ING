@@ -1,7 +1,7 @@
 import {LitElement, html} from 'lit';
 import {employeeCardStyles} from './employeeCard.styles';
 import {Router} from '@vaadin/router';
-import {store} from '../../store';
+import {store as realStore} from '../../store';
 import {deleteEmployeeData} from '../../slices/employeeSlice';
 import {
   setTotalPageNumber,
@@ -19,19 +19,20 @@ export class EmployeeCard extends LitElement {
     translations: {type: Object},
   };
 
-  constructor() {
+  constructor(store = realStore) {
     super();
+    this._store = store;
     this.isConfirmationModalActive = false;
-    const {localization} = store.getState();
+    const {localization} = this._store.getState();
     this.translations = localization.translations;
   }
 
   connectedCallback() {
     super.connectedCallback();
-    const {localization} = store.getState();
+    const {localization} = this._store.getState();
     this.locale = localization.locale;
-    this.unSubscribe = store.subscribe(() => {
-      const {localization} = store.getState();
+    this.unSubscribe = this._store.subscribe(() => {
+      const {localization} = this._store.getState();
       this.translations = localization.translations;
     });
   }
@@ -62,7 +63,7 @@ export class EmployeeCard extends LitElement {
   }
 
   handleConfirmationModalConfirm(employeeId) {
-    const {dispatch, getState} = store;
+    const {dispatch, getState} = this._store;
     dispatch(deleteEmployeeData(employeeId));
     this.isConfirmationModalActive = false;
     const {employee, pagination} = getState();

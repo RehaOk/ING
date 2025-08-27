@@ -1,6 +1,6 @@
 import {LitElement, html} from 'lit';
 import {headerStyles} from './pageNavigation.styles';
-import {store} from '../../store';
+import {store as realStore} from '../../store';
 import {setLocale} from '../../slices/localizationSlice';
 import {BRAND_NAME} from './pageNavigation.constants';
 
@@ -11,18 +11,19 @@ export class PageNavigation extends LitElement {
     translations: {type: Object},
   };
 
-  constructor() {
+  constructor(store = realStore) {
     super();
-    const {localization} = store.getState();
+    this._store = store;
+    const {localization} = this._store.getState();
     this.translations = localization.translations;
   }
 
   connectedCallback() {
     super.connectedCallback();
-    const {localization} = store.getState();
+    const {localization} = this._store.getState();
     this.locale = localization.locale;
-    this.unSubscribe = store.subscribe(() => {
-      const {localization} = store.getState();
+    this.unSubscribe = this._store.subscribe(() => {
+      const {localization} = this._store.getState();
       this.locale = localization.locale;
       this.translations = localization.translations;
     });
@@ -34,7 +35,7 @@ export class PageNavigation extends LitElement {
   }
 
   toggleLocale() {
-    const {dispatch} = store;
+    const {dispatch} = this._store;
     this.locale === 'en'
       ? dispatch(setLocale('tr'))
       : dispatch(setLocale('en'));

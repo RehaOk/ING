@@ -1,6 +1,6 @@
 import {LitElement, html} from 'lit';
 import {confirmationModalStyles} from './confirmationModal.styles.js';
-import {store} from '../../store';
+import {store as realStore} from '../../store';
 
 export class ConfirmationModal extends LitElement {
   static styles = confirmationModalStyles;
@@ -12,20 +12,21 @@ export class ConfirmationModal extends LitElement {
     translations: {type: Object},
   };
 
-  constructor() {
+  constructor(store = realStore) {
     super();
+    this._store = store;
     this.employee = '';
     this.isActive = false;
-    const {localization} = store.getState();
+    const {localization} = this._store.getState();
     this.translations = localization.translations;
   }
 
   connectedCallback() {
     super.connectedCallback();
-    const {localization} = store.getState();
+    const {localization} = this._store.getState();
     this.locale = localization.locale;
-    this.unSubscribe = store.subscribe(() => {
-      const {localization} = store.getState();
+    this.unSubscribe = this._store.subscribe(() => {
+      const {localization} = this._store.getState();
       this.translations = localization.translations;
     });
   }

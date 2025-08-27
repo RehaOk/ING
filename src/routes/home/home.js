@@ -5,7 +5,7 @@ import '../../components/employeeCard/employeeCard';
 import '../../components/pageNavigation/pageNavigation';
 import '../../components/pagination/pagination';
 import {setEmployeeListToDisplay} from '../../slices/paginationSlice';
-import {store} from '../../store';
+import {store as realStore} from '../../store';
 import {homeViewStyles} from './home.styles';
 import '../../components/employeeTable/employeeTable';
 import {
@@ -21,10 +21,11 @@ export class HomeView extends LitElement {
     viewMode: {type: String},
     translations: {type: Object},
   };
-  constructor() {
+  constructor(store = realStore) {
     super();
     this.viewMode = 'grid';
-    const {dispatch, getState} = store;
+    this._store = store;
+    const {dispatch, getState} = this._store;
     const {employee, pagination, localization} = getState();
     this.translations = localization.translations;
     this.employeeList = employee.employeeList;
@@ -42,7 +43,7 @@ export class HomeView extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    const {dispatch, getState, subscribe} = store;
+    const {dispatch, getState, subscribe} = this._store;
     const {employee, pagination} = getState();
     this.unSubscribe = subscribe(() => {
       const {pagination, localization} = getState();
@@ -67,7 +68,7 @@ export class HomeView extends LitElement {
   }
 
   handleViewModeChange(viewMode) {
-    const {dispatch, getState} = store;
+    const {dispatch, getState} = this._store;
     const {employee, pagination} = getState();
     if (viewMode !== this.viewMode) {
       dispatch(

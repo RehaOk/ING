@@ -1,5 +1,5 @@
 /* 
-    There is a problem with plugin if you are using it at line 63
+    There is a problem with plugin if you are using it at line 84
     see https://github.com/runem/lit-analyzer/issues/97
     didn't try to fix it to save time
 */
@@ -7,9 +7,9 @@
 import {LitElement, html} from 'lit';
 import {customInputStyles} from './customInput.styles';
 import {classMap} from 'lit/directives/class-map.js';
-import {store} from '../../store';
+import {store as realStore} from '../../store';
 
-class CustomInput extends LitElement {
+export class CustomInput extends LitElement {
   static styles = customInputStyles;
   static properties = {
     id: {type: String},
@@ -25,7 +25,7 @@ class CustomInput extends LitElement {
     translations: {type: Object},
   };
 
-  constructor() {
+  constructor(store = realStore) {
     super();
     this.type = 'text';
     this.label = '';
@@ -37,17 +37,17 @@ class CustomInput extends LitElement {
     this.errorHandler = {};
     this.name = '';
     this.selectedValue = '';
-
-    const {localization} = store.getState();
+    this._store = store;
+    const {localization} = this._store.getState();
     this.translations = localization.translations;
   }
 
   connectedCallback() {
     super.connectedCallback();
-    const {localization} = store.getState();
+    const {localization} = this._store.getState();
     this.locale = localization.locale;
-    this.unSubscribe = store.subscribe(() => {
-      const {localization} = store.getState();
+    this.unSubscribe = this._store.subscribe(() => {
+      const {localization} = this._store.getState();
       this.translations = localization.translations;
     });
   }

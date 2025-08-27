@@ -2,7 +2,7 @@ import {LitElement, html} from 'lit';
 import {employeeEditorStyles} from './employeeEditor.styles';
 import '../customInput/customInput';
 import {Router} from '@vaadin/router';
-import {store} from '../../store';
+import {store as realStore} from '../../store';
 import {
   createEmployeeData,
   updateEmployeeData,
@@ -37,25 +37,26 @@ export class EmployeeEditor extends LitElement {
     translations: {type: Object},
   };
 
-  constructor() {
+  constructor(store = realStore) {
     super();
+    this._store = store;
     this.isFormValid = false;
     this.isConfirmationModalActive = false;
-    const {localization} = store.getState();
+    const {localization} = this._store.getState();
     this.translations = localization.translations;
     this.inputs = [];
   }
 
   connectedCallback() {
     super.connectedCallback();
-    const {localization} = store.getState();
+    const {localization} = this._store.getState();
     this.locale = localization.locale;
-    this.unSubscribe = store.subscribe(() => {
-      const {localization} = store.getState();
+    this.unSubscribe = this._store.subscribe(() => {
+      const {localization} = this._store.getState();
       this.translations = localization.translations;
     });
     if (typeof this.id === 'string' && this.id.length > 0) {
-      const {employee} = store.getState();
+      const {employee} = this._store.getState();
       const {
         firstName,
         lastName,
@@ -103,7 +104,7 @@ export class EmployeeEditor extends LitElement {
   }
 
   handleConfirmationModalConfirm() {
-    const {dispatch} = store;
+    const {dispatch} = this._store;
     const submittedEmployeeData = {};
     this.inputs.forEach(({name, value, selectedValue}) => {
       if (selectedValue) {

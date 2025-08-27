@@ -1,6 +1,6 @@
 import {LitElement, html} from 'lit';
 import {updateViewStyles} from './update.styles';
-import {store} from '../../store';
+import {store as realStore} from '../../store';
 import {Router} from '@vaadin/router';
 
 export class UpdateView extends LitElement {
@@ -10,16 +10,17 @@ export class UpdateView extends LitElement {
     translations: {type: Object},
   };
 
-  constructor() {
+  constructor(store = realStore) {
     super();
-    const {localization} = store.getState();
+    this._store = store;
+    const {localization} = this._store.getState();
     this.translations = localization.translations;
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this.unSubscribe = store.subscribe(() => {
-      const {localization} = store.getState();
+    this.unSubscribe = this._store.subscribe(() => {
+      const {localization} = this._store.getState();
       this.translations = localization.translations;
       this.requestUpdate();
     });

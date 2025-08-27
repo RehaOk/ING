@@ -6,6 +6,8 @@
 
 import {legacyPlugin} from '@web/dev-server-legacy';
 import {playwrightLauncher} from '@web/test-runner-playwright';
+import {fromRollup} from '@web/dev-server-rollup';
+import rollupReplace from '@rollup/plugin-replace';
 
 const mode = process.env.MODE || 'dev';
 if (!['dev', 'prod'].includes(mode)) {
@@ -84,11 +86,13 @@ try {
   console.warn(e);
 }
 
+const replacePlugin = fromRollup(rollupReplace);
+
 // https://modern-web.dev/docs/test-runner/cli-and-configuration/
 export default {
   rootDir: '.',
-  files: ['./test/**/*_test.js'],
-  nodeResolve: {exportConditions: mode === 'dev' ? ['development'] : []},
+  files: ['./src/**/*.test.js'],
+  nodeResolve: {exportConditions: ['browser', 'module', 'import']},
   preserveSymlinks: true,
   browsers: commandLineBrowsers ?? Object.values(browsers),
   testFramework: {
@@ -99,6 +103,10 @@ export default {
     },
   },
   plugins: [
+    replacePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.MODE || 'development'),
+      preventAssignment: true,
+    }),
     // Detect browsers without modules (e.g. IE11) and transform to SystemJS
     // (https://modern-web.dev/docs/dev-server/plugins/legacy/).
     legacyPlugin({

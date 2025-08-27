@@ -1,6 +1,6 @@
 import {LitElement, html} from 'lit';
 import {paginationStyles} from './pagination.styles';
-import {store} from '../../store';
+import {store as realStore} from '../../store';
 import {
   setCurrentPage,
   setEmployeeListToDisplay,
@@ -18,9 +18,10 @@ export class PaginationComponent extends LitElement {
     currentItemsPerPage: {type: Number},
   };
 
-  constructor() {
+  constructor(store = realStore) {
     super();
-    const {dispatch, getState} = store;
+    this._store = store;
+    const {dispatch, getState} = this._store;
     const {pagination, employee} = getState();
     this.currentPageNumber = pagination.currentPage;
     this.currentItemsPerPage = pagination.itemsPerPage;
@@ -30,8 +31,8 @@ export class PaginationComponent extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.unSubscribe = store.subscribe(() => {
-      const {pagination} = store.getState();
+    this.unSubscribe = this._store.subscribe(() => {
+      const {pagination} = this._store.getState();
       const {currentPage, itemsPerPage} = pagination;
       this.currentPageNumber = currentPage;
       if (currentPage !== this.currentPageNumber) {
@@ -51,7 +52,7 @@ export class PaginationComponent extends LitElement {
   }
 
   goToPage(pageNumber = this.currentPageNumber) {
-    const {dispatch, getState} = store;
+    const {dispatch, getState} = this._store;
     const {employeeList} = getState().employee;
     dispatch(
       setEmployeeListToDisplay(
@@ -67,7 +68,7 @@ export class PaginationComponent extends LitElement {
   }
 
   goToNextPage() {
-    const {totalPageNumber} = store.getState().pagination;
+    const {totalPageNumber} = this._store.getState().pagination;
     if (this.currentPageNumber < totalPageNumber) {
       this.currentPageNumber += 1;
       this.goToPage();
@@ -82,7 +83,7 @@ export class PaginationComponent extends LitElement {
   }
 
   getPaginationNumbers() {
-    const {totalPageNumber} = store.getState().pagination;
+    const {totalPageNumber} = this._store.getState().pagination;
     const pageNumbers = [];
     for (
       let i = this.currentPageNumber - PAGE_NUMBER_OFFSET;
